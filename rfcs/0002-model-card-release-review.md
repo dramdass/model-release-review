@@ -8,7 +8,7 @@ A model card should tell adopters what they can verify for their use case. We wa
 
 Ask OpenAI to add [four principle metrics](../examples/gpt-6.2-astra-release-review.md) to the [published GPT-6.2 Astra system card](https://deploymentsafety.openai.com/gpt-6-2-astra-sol). Treat them like a benchmark metric such as perplexity. Report the value, counts, case-set version, and evidence. Mark missing results as **Not reported**.
 
-The community can compare both cards now and see which gaps the field makes clear. OpenAI would publish measured results and remain responsible for release concerns. Link the **Open Review** record so readers can see who reviewed it, what changed, and who can act on a concern. Use the [Open Review discussion](https://github.com/dramdass/model-release-review/pull/1) to challenge the wording or the scoring.
+Compare the published card with the same card plus the proposed disclosure. OpenAI would publish measured results and remain responsible for release concerns. Link the **Open Review** record so readers can see who reviewed it, what changed, and who can act on a concern. Use the [Open Review discussion](https://github.com/dramdass/model-release-review/pull/1) to challenge the wording or the scoring.
 
 ## Example benchmark use case
 
