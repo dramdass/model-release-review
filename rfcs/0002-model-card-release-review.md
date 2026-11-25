@@ -1,65 +1,37 @@
 # RFC 0002 · Model card release review
 
-**Status** Draft for comment
+**Early draft for public comment**
 
-## Problem
+A model card should tell adopters what they can verify for their use case. We want public benchmarks for [fairness, resilience, empowerment, and collaboration](../README.md). [Eugene Yan’s review of twelve public evals](https://eugeneyan.com/writing/public-evals) got us thinking about who checks the grader.
 
-Downstream users need to know what changed across a model’s lifecycle, who reviewed those changes, and what evidence informed release decisions. Benchmark results describe part of that record.
+## First case
 
-This benchmark proposal began with [Eugene Yan’s review of twelve public evals](https://eugeneyan.com/writing/public-evals). His examples of incorrect grades prompted us to publish the scoring rules and invite people to challenge them. See the [benchmark design notes](../research/benchmark-design.md).
+Ask OpenAI to add [four principle metrics](../examples/gpt-6.2-astra-release-review.md) to the [published GPT-6.2 Astra system card](https://deploymentsafety.openai.com/gpt-6-2-astra-sol). Treat them like a benchmark metric such as perplexity. Report the value, counts, case-set version, and evidence. Mark missing results as **Not reported**.
 
-## Proposal
+The community can compare both cards now and see which gaps the field makes clear. OpenAI would publish measured results and remain responsible for release concerns. Link the **Open Review** record so readers can see who reviewed it, what changed, and who can act on a concern. Use the [Open Review discussion](https://github.com/dramdass/model-release-review/pull/1) to challenge the wording or the scoring.
 
-Add an optional **Release review** section to the [annotated model card](https://huggingface.co/docs/hub/model-card-annotated) and link to it from the [release checklist](https://huggingface.co/docs/hub/model-release-checklist). Start with a proposed edit to one existing model card. State the baseline, intended use, release decision, and criteria set before testing.
+## Example benchmark use case
 
-### Model lifecycle
+Test GPT‑6.2 Astra as a doctor’s assistant on simulated diagnostic cases. Compare matched cases reviewed by doctors without AI. A trajectory passes when it meets every applicable requirement for that principle, from the first question through the doctor’s final decision.
 
-Record one line per stage. Link evidence. For restricted material, publish a summary and say who reviewed the underlying evidence.
+- **Fairness.** Do clinically equivalent cases meet the same requirements across patient groups? Change the patient’s preferred language and keep the clinical facts the same.
+- **Resilience.** Does the team recover when important information changes? A corrected lab result arrives. The team rechecks its initial assessment.
+- **Empowerment.** Can the doctor see uncertainty and make the final decision? The doctor can inspect the evidence and override a tentative diagnosis before it enters the note.
+- **Collaboration.** Does the team address a concern the doctor raises? The doctor points out a mistaken assumption. The team resolves or records it before finalizing.
 
-- **Scope.** Intended users, intended use, limits, and criteria.
-- **Data and training.** Data sources and exclusions, base model, and changes in training or fine-tuning.
-- **Evaluation.** Results against the baseline, gaps in coverage, and known failures.
-- **Release.** Approved scope, rollout plan, and how to revert or alert downstream users.
-- **Monitoring.** What the team watches, when it will intervene, and who responds.
-- **Retirement.** Notice, migration, and what support ends.
+[See the metric disclosure and illustrative scores](../examples/gpt-6.2-astra-release-review.md). [Read the benchmark design](../research/benchmark-design.md).
 
-### Open Review
+## What the open committee decides
 
-Link a public thread for the model version. Anyone can raise a concern or propose a change. Publish responses, changes, and unresolved concerns. Provide a private reporting path and publish a summary for issues involving confidential material. For each principle below, record the evidence and reviewer roles.
+- **Control group.** Should doctors work unaided or use their usual decision-support tools?
+- **Alignment checks.** Which steps should we score, and when should changes trigger a rerun?
+- **Clinicians.** Which specialties and experience levels should take part? Who writes and applies the rubric?
+- **Data sharing.** Which cases, traces, and scoring notes can be public? What needs redaction or restricted access?
 
-- **Fairness.** Who gets worse results than with the previous version? Whose experience did the tests leave out?
-- **Resilience.** What happens when a common input or dependency fails? When would you pause the rollout, roll back, or warn downstream users?
-- **Empowerment.** Can users correct a result or finish the task another way? What can downstream users inspect, run, or adapt?
-- **Collaboration.** Who affected by the release reviewed it? What changed because of their input?
+Record these choices and unresolved disagreements before running the cases.
 
-## Establish community benchmarks
+## Join the work
 
-Pin the case-set revision and pass criteria before evaluation. Publish each rate with its numerator, denominator, and baseline. Identify required cases that were not run. Mark a rate inapplicable when its denominator is zero.
+Use the same four principles across industries. Domain teams define their cases, passing requirements, and control group. Report rates by domain. Bring cases from software operations, customer support, education, or public services.
 
-- **Fairness · Group pass rate.** In-scope groups that meet an agreed outcome target / all in-scope groups. Publish outcomes and missing coverage by group.
-- **Resilience · Recovery pass rate.** Fault cases that meet their recovery target / required fault cases.
-- **Empowerment · User control pass rate.** Workflows where people can complete, correct, or exit within agreed limits / required control workflows.
-- **Collaboration · Response coverage.** Material concerns publicly addressed before sign-off / material concerns in scope.
-
-Anyone can contribute or challenge a case. A case records its ID, principle, affected population or workflow, lifecycle stage, reproducible procedure, pass criterion, and evidence. Four open groups curate and version the case set. Recruit participants across regions, languages, and roles. Hold weekly public reviews at rotating times, take asynchronous proposals, and publish decisions and dissent.
-
-### First benchmark · Model lifecycle
-
-The first case compares the published [OLMo 2 7B Instruct card](https://huggingface.co/allenai/OLMo-2-1124-7B-Instruct) with the same card plus the proposed **Release review** field. Two reviewers apply the same six lifecycle questions to the [pinned baseline](https://huggingface.co/allenai/OLMo-2-1124-7B-Instruct/tree/470b1fba1ae01581f270116362ee4aa1b97f4c84) and the [proposed patch](../examples/olmo-2-7b-instruct-release-review.patch). Mark each stage evidence linked, gap stated, missing, or inapplicable. Use the six questions and time and evidence limits in the [pilot protocol](../research/benchmark-design.md#first-case-and-limits). Give the two reviewers opposite reading orders. Count evidence when a source supports the claim, and retain the citation. Check the rubric against a known-good disclosure, an explicit gap, and a plausible but unsupported citation. Publish evidence coverage and stated gaps separately, along with both assessments and disagreements before reconciliation. The comparison covers the change in wording and placement together. Ai2 maintainers review the documentation edit. The four principle rates require separate model or workflow tests.
-
-## Governance
-
-The publisher owns the decision. In the pilot, one open committee with four review groups sets criteria and signs off on the proposed scope. Anyone can [open an issue to join](https://github.com/dramdass/model-release-review/issues/new). Participation in Open Review is open to readers as well as members.
-
-Name one signer per group and the criteria each group owns. Count material concerns once, including confidential ones, and publish a redacted disposition when needed. The group responsible for a criterion records how it resolved any objection and what evidence it used. The release owner records approval, a narrowed scope, or a hold. Missing evidence or sign-off holds the affected scope. Operators can pause the rollout. Record new sign-offs for material updates and retirement.
-
-- **Fairness** pairs affected users with evaluation leads to choose comparisons and review gaps.
-- **Resilience** pairs operators with downstream deployers to review failure tests and recovery plans.
-- **Empowerment** pairs end users with maintainers to try correction and fallback paths and review release terms.
-- **Collaboration** pairs affected users with a facilitator outside the model team to review whose input changed the decision and which concerns remain open.
-
-A small team can hold one review meeting with the four roles represented. Expand the pilot if both reviewers find more supported answers or explicit gaps and the changed card introduces no unsupported claims.
-
-## Upstream proposal
-
-Start with a pull request to the OLMo model card. Use feedback from the first case to propose the optional section in [Hub Docs](https://github.com/huggingface/hub-docs/blob/main/docs/hub/model-card-annotated.md). Keep the decision in the card readers already consult. A longer record fits in a linked artifact and needs versioning. The checklist helps authors find the field. The card itself preserves the decision for readers. The publisher owns its review policy. If the section proves useful, propose adding it to the [default model card template](https://github.com/huggingface/huggingface_hub/blob/main/src/huggingface_hub/templates/modelcard_template.md).
+[Join or propose a case on GitHub](https://github.com/dramdass/model-release-review/issues/new). Bring a case, a concern about the scoring, or a better place to start. Anyone can take part. Open review groups curate cases, answer scoring objections, and publish their decisions and disagreements. [Draft participation terms](../PARTICIPATION.md)

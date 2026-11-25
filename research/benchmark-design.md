@@ -19,7 +19,7 @@ Eugene Yan’s essay got this project thinking about how to build public benchma
 
 A review of 445 LLM benchmarks found recurring gaps between the constructs they claimed to measure and the way they scored tasks. Give each proposed rate a narrow claim. For fairness in particular, publish outcomes and gaps by group alongside the rate so readers can see what the threshold hides. [Measuring What Matters](https://proceedings.neurips.cc/paper_files/paper/2025/hash/1967e0fc3aa6cbbace562f5cb8e3954e-Abstract-Datasets_and_Benchmarks_Track.html)
 
-Compare the pinned OLMo 2 7B Instruct card with the same version plus Release review. Give each reviewer 15 minutes per card, with its text and up to two hops from its links. Fix the applicable stages before either review. Use these six questions for both cards:
+Compare the published GPT-6.2 Astra system card with the same version plus the proposed principle-metrics disclosure. Give each reviewer 15 minutes per card, with its text and up to two hops from its links. Fix the applicable stages before either review. Use these six questions for both cards:
 
 1. What uses, users, and limits does the publisher name?
 2. Which data, training recipe, and checkpoint produced this release?
@@ -45,4 +45,4 @@ Capture the earliest completed step and the first blocker for each run. A privat
 
 Put version, intended use, baseline, and the release decision at the top. Show one line for each lifecycle stage with its evidence status. Link versioned artifacts, denominators and per-case outcomes behind the headline numbers. In Open Review, show who had authority to decide, whether a concern changed the release, and when the decision will be revisited. Link deployment-specific controls to the service or integration responsible for them.
 
-The first staged reader reproduced the OLMo patch. Scope, training, and evaluation had supporting evidence. Release was partly documented. The patch made the monitoring and retirement gaps easier to find. That is a disclosure result. The four principle rates remain pending.
+The first staged reader rehearsal applied an earlier sample card patch. It surfaced gaps in monitoring and retirement. The GPT-6.2 Astra comparison and the four principle rates remain pending.
