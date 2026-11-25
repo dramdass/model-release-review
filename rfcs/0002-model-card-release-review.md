@@ -6,6 +6,8 @@
 
 Downstream users need to know what changed across a model’s lifecycle, who reviewed those changes, and what evidence informed release decisions. Benchmark results describe part of that record.
 
+This benchmark proposal began with [Eugene Yan’s review of twelve public evals](https://eugeneyan.com/writing/public-evals). His examples of incorrect grades prompted us to publish the scoring rules and invite people to challenge them. See the [benchmark design notes](../research/benchmark-design.md).
+
 ## Proposal
 
 Add an optional **Release review** section to the [annotated model card](https://huggingface.co/docs/hub/model-card-annotated) and link to it from the [release checklist](https://huggingface.co/docs/hub/model-release-checklist). Start with a proposed edit to one existing model card. State the baseline, intended use, release decision, and criteria set before testing.
@@ -34,7 +36,7 @@ Link a public thread for the model version. Anyone can raise a concern or propos
 
 Pin the case-set revision and pass criteria before evaluation. Publish each rate with its numerator, denominator, and baseline. Identify required cases that were not run. Mark a rate inapplicable when its denominator is zero.
 
-- **Fairness · Group pass rate.** In-scope groups that meet an agreed outcome target / all in-scope groups.
+- **Fairness · Group pass rate.** In-scope groups that meet an agreed outcome target / all in-scope groups. Publish outcomes and missing coverage by group.
 - **Resilience · Recovery pass rate.** Fault cases that meet their recovery target / required fault cases.
 - **Empowerment · User control pass rate.** Workflows where people can complete, correct, or exit within agreed limits / required control workflows.
 - **Collaboration · Response coverage.** Material concerns publicly addressed before sign-off / material concerns in scope.
@@ -43,21 +45,21 @@ Anyone can contribute or challenge a case. A case records its ID, principle, aff
 
 ### First benchmark · Model lifecycle
 
-The first case compares the published [OLMo 2 7B Instruct card](https://huggingface.co/allenai/OLMo-2-1124-7B-Instruct) with the same card plus the proposed **Release review** field. Two reviewers apply the same six lifecycle questions to the [pinned baseline](https://huggingface.co/allenai/OLMo-2-1124-7B-Instruct/tree/470b1fba1ae01581f270116362ee4aa1b97f4c84) and the [proposed patch](../examples/olmo-2-7b-instruct-release-review.patch). Mark each stage evidence linked, gap stated, missing, or inapplicable. Count evidence when a source supports the card’s claim. Record disagreements and publish both scores. Ai2 maintainers review the documentation edit. The four principle rates require separate model or workflow tests.
+The first case compares the published [OLMo 2 7B Instruct card](https://huggingface.co/allenai/OLMo-2-1124-7B-Instruct) with the same card plus the proposed **Release review** field. Two reviewers apply the same six lifecycle questions to the [pinned baseline](https://huggingface.co/allenai/OLMo-2-1124-7B-Instruct/tree/470b1fba1ae01581f270116362ee4aa1b97f4c84) and the [proposed patch](../examples/olmo-2-7b-instruct-release-review.patch). Mark each stage evidence linked, gap stated, missing, or inapplicable. Use the six questions and time and evidence limits in the [pilot protocol](../research/benchmark-design.md#first-case-and-limits). Give the two reviewers opposite reading orders. Count evidence when a source supports the claim, and retain the citation. Check the rubric against a known-good disclosure, an explicit gap, and a plausible but unsupported citation. Publish evidence coverage and stated gaps separately, along with both assessments and disagreements before reconciliation. The comparison covers the change in wording and placement together. Ai2 maintainers review the documentation edit. The four principle rates require separate model or workflow tests.
 
 ## Governance
 
 The publisher owns the decision. In the pilot, one open committee with four review groups sets criteria and signs off on the proposed scope. Anyone can [open an issue to join](https://github.com/dramdass/model-release-review/issues/new). Participation in Open Review is open to readers as well as members.
 
-Name one signer per group and the criteria each group owns. The group responsible for a criterion records how it resolved any objection and what evidence it used. The release owner records approval, a narrowed scope, or a hold. Missing evidence or sign-off holds the affected scope. Operators can pause the rollout. Record new sign-offs for material updates and retirement.
+Name one signer per group and the criteria each group owns. Count material concerns once, including confidential ones, and publish a redacted disposition when needed. The group responsible for a criterion records how it resolved any objection and what evidence it used. The release owner records approval, a narrowed scope, or a hold. Missing evidence or sign-off holds the affected scope. Operators can pause the rollout. Record new sign-offs for material updates and retirement.
 
 - **Fairness** pairs affected users with evaluation leads to choose comparisons and review gaps.
 - **Resilience** pairs operators with downstream deployers to review failure tests and recovery plans.
 - **Empowerment** pairs end users with maintainers to try correction and fallback paths and review release terms.
 - **Collaboration** pairs affected users with a facilitator outside the model team to review whose input changed the decision and which concerns remain open.
 
-A small team can hold one review meeting with the four roles represented. Expand the pilot if both reviewers can verify more lifecycle stages from the changed card.
+A small team can hold one review meeting with the four roles represented. Expand the pilot if both reviewers find more supported answers or explicit gaps and the changed card introduces no unsupported claims.
 
 ## Upstream proposal
 
-Start with a pull request to the OLMo model card. Use feedback from the first case to propose the optional section in [Hub Docs](https://github.com/huggingface/hub-docs/blob/main/docs/hub/model-card-annotated.md). Keep the decision in the card readers already consult. Link longer evidence records and use the checklist to point publishers to the section. The publisher owns its review policy. If the section proves useful, propose adding it to the [default model card template](https://github.com/huggingface/huggingface_hub/blob/main/src/huggingface_hub/templates/modelcard_template.md).
+Start with a pull request to the OLMo model card. Use feedback from the first case to propose the optional section in [Hub Docs](https://github.com/huggingface/hub-docs/blob/main/docs/hub/model-card-annotated.md). Keep the decision in the card readers already consult. A longer record fits in a linked artifact and needs versioning. The checklist helps authors find the field. The card itself preserves the decision for readers. The publisher owns its review policy. If the section proves useful, propose adding it to the [default model card template](https://github.com/huggingface/huggingface_hub/blob/main/src/huggingface_hub/templates/modelcard_template.md).
